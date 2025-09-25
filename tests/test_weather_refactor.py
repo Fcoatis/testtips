@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from weather_refactor import WeatherService
+from testtips.weather_refactor import WeatherService
 
 
 @pytest.fixture

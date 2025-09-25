@@ -1,4 +1,4 @@
-from weather import WeatherService
+from testtips.weather import WeatherService
 import pytest
 from typing import Any
 

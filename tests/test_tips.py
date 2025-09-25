@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from weather import WeatherService
+from testtips.weather import WeatherService
 
 
 @pytest.mark.parametrize(

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from weather import WeatherService
+from testtips.weather import WeatherService
 
 
 def test_get_temperature_with_mocking_monkeypatch(

@@ -1,5 +1,5 @@
 import pytest
-from weather import WeatherService
+from testtips.weather import WeatherService
 from typing import Any
 from unittest.mock import MagicMock
 
