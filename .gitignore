@@ -1,2 +1,29 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Builds / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Testes / ferramentas
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+.mypy_cache/
+.pytype/
+.tox/
+
+# Ambientes
+.venv/
+.uv/
+.env
+
+# Windows ADS
 *.Zone.Identifier
 *:Zone.Identifier
+
