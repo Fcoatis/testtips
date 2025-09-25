@@ -5,6 +5,7 @@ import pytest
 from testtips.weather_refactor import WeatherService
 
 
+
 @pytest.fixture
 def weather_service() -> WeatherService:
     mock_http_client = MagicMock()

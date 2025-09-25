@@ -1,19 +1,20 @@
-import pytest
-from testtips.weather import WeatherService
 from typing import Any
 from unittest.mock import MagicMock
+import pytest
+
+from testtips import WeatherService
 
 @pytest.fixture
-def weather_service(monkeypatch: pytest.MonkeyPatch) -> WeatherService:
-    def fake_get(url: str, params: dict[str, Any]) -> Any:
-        mock_response = MagicMock()
-        mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {"current": {"temp_c": 25}}
-        return mock_response
+def weather_service() -> WeatherService:
+    mock_response = MagicMock()
+    mock_response.raise_for_status.return_value = None
+    mock_response.json.return_value = {"current": {"temp_c": 25}}
 
-    monkeypatch.setattr("httpx.get", fake_get)
-    return WeatherService(api_key="fake-key")
+    client = MagicMock()
+    client.get.return_value = mock_response
+
+    return WeatherService(client=client, api_key="fake-key")
+
 
 def test_fixture_usage(weather_service: WeatherService) -> None:
-    assert weather_service.get_temperature("Paris") == 25
-
+    assert weather_service.get_temperature("Sao Paulo") == 25

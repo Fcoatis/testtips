@@ -1,24 +1,20 @@
 from typing import Any
-from unittest.mock import MagicMock, patch
-
+from unittest.mock import MagicMock
 import pytest
 
-from testtips.weather import WeatherService
+from testtips import WeatherService
 
+def test_get_temperature_with_mocking_monkeypatch() -> None:
+    # usando apenas MagicMock (sem monkeypatch)
+    mock_response = MagicMock()
+    mock_response.raise_for_status.return_value = None
+    mock_response.json.return_value = {"current": {"temp_c": 25}}
 
-def test_get_temperature_with_mocking_monkeypatch(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    def fake_get(url: str, params: dict[str, Any]) -> Any:
-        mock_response = MagicMock()
-        mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {"current": {"temp_c": 25}}
-        return mock_response
+    client = MagicMock()
+    client.get.return_value = mock_response
 
-    monkeypatch.setattr("httpx.get", fake_get)
-    service = WeatherService(api_key="fake-key")
-    temp = service.get_temperature("Amsterdam")
-    assert temp == 25
+    service = WeatherService(client=client, api_key="fake-key")
+    assert service.get_temperature("Rio") == 25
 
 
 def test_get_temperature_with_mocking() -> None:
@@ -26,9 +22,8 @@ def test_get_temperature_with_mocking() -> None:
     mock_response.raise_for_status.return_value = None
     mock_response.json.return_value = {"current": {"temp_c": 25}}
 
-    with patch("httpx.get", return_value=mock_response) as mock_get:
-        service = WeatherService(api_key="fake-key")
-        temp = service.get_temperature("London")
+    client = MagicMock()
+    client.get.return_value = mock_response
 
-        assert temp == 25
-        mock_get.assert_called_once()
+    service = WeatherService(client=client, api_key="fake-key")
+    assert service.get_temperature("Belo Horizonte") == 25
